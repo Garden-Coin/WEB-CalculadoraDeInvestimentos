@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CalculatorBody = styled.div`
     width: 65%;
-    height: 500px;
+    height: 480px;
     background: #09131B;
     border-radius: 12px;
     display: flex;
@@ -29,11 +29,11 @@ export const Content = styled.div`
 export const Button = styled.button`
     width: 15%;
     height: 2em;
-    font-size:1.2em;
+    font-size: 1.2em;
     font-weight: bold;
     text-align: center;
     color: white;
     background-color: #E55F14;
     border: none;
-    border-radius:8px;
+    border-radius: 8px;
 `

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export const ResultBody = styled.div`
     width: 35%;
-    height: 500px;
+    height: 480px;
     background: #CA642A;
     border-radius: 12px;
     display: flex;
@@ -16,6 +16,7 @@ export const ResultBody = styled.div`
 export const Titulo = styled.h1 `
     width: 90%;
     color: white;
+
 `
 
 export const Content = styled.div`
@@ -25,6 +26,7 @@ export const Content = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+
 `;
 
 export const ContentLine = styled.div`

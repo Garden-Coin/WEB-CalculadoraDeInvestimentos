@@ -11,7 +11,7 @@ export default function Result() {
             <S.Titulo> Resultado </S.Titulo>
             <S.Content>
                 <S.ContentLine >
-                    <Card id="InvestingTotalValue" className='m-2'>
+                    <Card id="InvestingTotalValue" className='me-2'>
                         <Card.Body>
                             <Card.Title className='fs-6 fw-bold text-center'>Total Investido</Card.Title>
                             <Card.Text className='fs-4 fw-bold text-center'>
@@ -19,7 +19,7 @@ export default function Result() {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card id="InvestingTotalValue" className='m-2'>
+                    <Card id="InvestingTotalValue" className='ms-2'>
                         <Card.Body>
                             <Card.Title className='fs-6 fw-bold text-center text-primary'>Total em Juros</Card.Title>
                             <Card.Text className='fs-4 fw-bold text-center text-primary'>
