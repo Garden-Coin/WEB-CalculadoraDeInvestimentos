@@ -1,11 +1,66 @@
 "use client"
 
-import React from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import * as S from './styled';
-import { Button, ButtonGroup, ButtonToolbar, Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import api from '@/app/services/api';
+import { SimulationRequest, SimulationResponse, FormSimulationData, SimulationResponseProps } from '@/app/interfaces/interfaces';
+import { ObjetoTeste, passData } from '@/app/utils/variables';
 
-export default function Calculator() {
+
+const Calculator: React.FC<SimulationResponseProps> = ({onObjectChange}) =>  {
+    const [result, setResult] = useState<SimulationResponse>();
+    const [objForm, setObjForm] = useState<SimulationRequest>({
+        period: 0,
+        profitability: 0,
+        profitabilityType: 0,
+        initialValue: 0
+    });
+    
+    useEffect(() => {
+        console.log("Gerar novo calculo")
+    }, [objForm]);
+
+    useEffect(() => {
+        console.log("Gerar novo calculo")
+        onObjectChange(result);
+    }, [result]);
+
+    const passData = () => {
+        let objSimular: SimulationRequest = {
+            period: objForm.period,
+            profitability: objForm.profitability,
+            profitabilityType: 1,
+            initialValue: objForm.initialValue
+        }
+        setObjForm(objSimular);
+
+        console.log("Objeto para calcular: ", objForm);
+        
+        api.post('/simulacao/juros-compostos', objForm).then((response) => {
+            const formattedResponse: SimulationResponse ={
+                period: response.data.period,
+                profitability: response.data.profiability,
+                realProfitability: response.data.realProfiability,
+                profitabilityType: response.data.profiabilityType,
+                initialValue: response.data.initialValue,
+                finalValue: response.data.finalValue
+            }
+            setResult(formattedResponse);
+            console.log("Result", result)
+            onObjectChange(result);
+            
+        });         
+    };
+
+
+    function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+        const { id, value } = e.target;
+
+        setObjForm({ ...objForm, [id]: parseFloat(value) });        
+    }
+
     return (
         <S.CalculatorBody>
             <S.Titulo> Calculadora - Juros Compostos</S.Titulo>
@@ -13,17 +68,16 @@ export default function Calculator() {
                 <div className="w-100 d-flex flex-row">
                     <Form.Group className="me-4 w-50">
                         <Form.Label className="text-white" htmlFor="initialValue">Valor Inicial</Form.Label>
-                        <InputGroup id="initialValue" className="mb-2">
+                        <InputGroup  className="mb-2">
                             <InputGroup.Text >R$</InputGroup.Text>
-                            <Form.Control type='number' placeholder="00,00" aria-label="Text input with dropdown button" />
+                            <Form.Control id="initialValue" onChange={handleInputChange} type='number' placeholder="00,00" aria-label="Text input with dropdown button" />
                         </InputGroup>
                     </Form.Group>
                     <Form.Group className="ms-2 w-50">
-                        <Form.Label className="text-white" htmlFor="initialValue">Taxa de Juros</Form.Label>
-                        <InputGroup id="taxes">
+                        <Form.Label className="text-white" htmlFor="profitability">Taxa de Juros</Form.Label>
+                        <InputGroup >
                             <InputGroup.Text >%</InputGroup.Text>
-                            <Form.Control type='number' aria-label="Text input with dropdown button" />
-
+                            <Form.Control onChange={handleInputChange} id="profitability" type='number' aria-label="Text input with dropdown button" />
                             <DropdownButton
                                 variant="outline-secondary"
                                 title="Mensal"
@@ -36,24 +90,23 @@ export default function Calculator() {
                         </InputGroup>
                     </Form.Group>
                 </div>
-                <div className="w-100 d-flex flex-row justify-content-around">
+                <div className="w-100 d-flex flex-row justify-content-around" >
                     <Form.Group className="me-4 w-50">
                         <Form.Label className="text-white" htmlFor="periodValue">Aporte</Form.Label>
-                        <InputGroup id="initialValue" className="mb-2">
+                        <InputGroup className="mb-2">
                             <InputGroup.Text >R$</InputGroup.Text>
-                            <Form.Control type='number' placeholder="00,00" aria-label="Text input with dropdown button" />
+                            <Form.Control onChange={handleInputChange} id="periodValue" type='number' placeholder="00,00" aria-label="Text input with dropdown button" />
                         </InputGroup>
                     </Form.Group>
 
                     <Form.Group className="ms-2 w-50">
-                        <Form.Label className="text-white" htmlFor="initialValue">Período</Form.Label>
-                        <InputGroup id="period">
-                            <Form.Control type='number' aria-label="Text input with dropdown button" />
-
+                        <Form.Label className="text-white" htmlFor="period">Período</Form.Label>
+                        <InputGroup >
+                            <Form.Control onChange={handleInputChange} id="period" type='number' aria-label="Text input with dropdown button" />
                             <DropdownButton
                                 variant="outline-secondary"
                                 title="Mensal"
-                                id="input-group-dropdown-2"
+                                id="profitabilityType"
                                 align="end"
                             >
                                 <Dropdown.Item href="#">Mensal</Dropdown.Item>
@@ -63,10 +116,28 @@ export default function Calculator() {
                     </Form.Group>
                 </div>
                 <div className='d-flex flex-row-reverse w-100'>
-                    <S.Button> Simular</S.Button>
+                    <S.Button onClick={passData}> Simular</S.Button>
 
                 </div>
             </S.Content>
+            {/* <Result 
+                  period={0}  
+                  profitability={2000}
+                  realProfitability={3000}
+                  profitabilityType={2000}
+                  initialValue={1000}
+                  finalValue={8500}
+            /> */}
+{/*             
+             period={result?.period}  
+             profitability={result?.profitability}
+             realProfitability={result?.realProfitability}
+             profitabilityType={result?.profitabilityType}
+             initialValue={0}
+             finalValue={result?.finalValue}
+             */}
         </S.CalculatorBody>
     )
 }
+
+export default Calculator;
