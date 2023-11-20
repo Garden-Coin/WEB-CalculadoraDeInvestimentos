@@ -16,8 +16,7 @@ export const ResultBody = styled.div`
 export const Titulo = styled.h1 `
     width: 90%;
     color: white;
-
-`
+`;
 
 export const Content = styled.div`
     width: 90%;
@@ -34,4 +33,4 @@ export const ContentLine = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-`
+`;
