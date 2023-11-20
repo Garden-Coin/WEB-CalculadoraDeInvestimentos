@@ -6,8 +6,6 @@ import { Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from '@/app/services/api';
 import { SimulationRequest, SimulationResponse, FormSimulationData, SimulationResponseProps } from '@/app/interfaces/interfaces';
-import { ObjetoTeste, passData } from '@/app/utils/variables';
-
 
 const Calculator: React.FC<SimulationResponseProps> = ({onObjectChange}) =>  {
     const [result, setResult] = useState<SimulationResponse>();
@@ -53,7 +51,6 @@ const Calculator: React.FC<SimulationResponseProps> = ({onObjectChange}) =>  {
             
         });         
     };
-
 
     function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
         const { id, value } = e.target;
@@ -117,25 +114,8 @@ const Calculator: React.FC<SimulationResponseProps> = ({onObjectChange}) =>  {
                 </div>
                 <div className='d-flex flex-row-reverse w-100'>
                     <S.Button onClick={passData}> Simular</S.Button>
-
                 </div>
             </S.Content>
-            {/* <Result 
-                  period={0}  
-                  profitability={2000}
-                  realProfitability={3000}
-                  profitabilityType={2000}
-                  initialValue={1000}
-                  finalValue={8500}
-            /> */}
-{/*             
-             period={result?.period}  
-             profitability={result?.profitability}
-             realProfitability={result?.realProfitability}
-             profitabilityType={result?.profitabilityType}
-             initialValue={0}
-             finalValue={result?.finalValue}
-             */}
         </S.CalculatorBody>
     )
 }

@@ -15,7 +15,7 @@ export const CalculatorBody = styled.div`
 export const Titulo = styled.h1 `
     width: 90%;
     color: white;
-`
+`;
 
 export const Content = styled.div`
     width: 90%;
@@ -36,4 +36,4 @@ export const Button = styled.button`
     background-color: #E55F14;
     border: none;
     border-radius: 8px;
-`
+`;

@@ -5,8 +5,6 @@ import styles from './page.module.css'
 import Calculator from './pages/index/components/calculator-component'
 import Result from './pages/index/components/result-component'
 import { useEffect, useState } from 'react'
-import { SimulationResponse, SimulationResponseProps } from './interfaces/interfaces'
-import { ObjetoTeste } from './utils/variables'
 
 export default function Home() {
   const [dataResult, setDataResult] = useState<any>(null);
