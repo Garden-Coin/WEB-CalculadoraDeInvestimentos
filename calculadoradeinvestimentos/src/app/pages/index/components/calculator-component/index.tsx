@@ -5,7 +5,9 @@ import * as S from './styled';
 import { Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from '@/app/services/api';
-import { SimulationRequest, SimulationResponse, FormSimulationData, SimulationResponseProps } from '@/app/interfaces/interfaces';
+import { SimulationRequest, SimulationResponse, FormSimulationData, SimulationResponseProps } from '@/app/interfaces/simulation';
+import { ErrorResponse, ErrorToast } from '@/app/interfaces/error';
+import ErrorComponent from '@/app/components/errorComponent';
 
 const Calculator: React.FC<SimulationResponseProps> = ({onObjectChange}) =>  {
     const [result, setResult] = useState<SimulationResponse>();
@@ -15,10 +17,21 @@ const Calculator: React.FC<SimulationResponseProps> = ({onObjectChange}) =>  {
         profitabilityType: 0,
         initialValue: 0
     });
+    const [errorMessage, setErrorMessage] = useState<ErrorResponse>();
     
     useEffect(() => {
-        console.log("Gerar novo calculo")
-    }, [objForm]);
+        if(errorMessage !== null && errorMessage !== undefined) {
+   
+            let errorToast: ErrorToast = {
+                title: errorMessage?.message,
+                description: errorMessage?.details.body[0].message,
+                suggestion: errorMessage?.details.body[0].type
+            }
+            console.log("Erro no toast", errorToast);
+            ErrorComponent(errorToast);
+        } 
+        
+    }, [errorMessage]);
 
     useEffect(() => {
         console.log("Gerar novo calculo")
@@ -49,6 +62,9 @@ const Calculator: React.FC<SimulationResponseProps> = ({onObjectChange}) =>  {
             console.log("Result", result)
             onObjectChange(result);
             
+        }).catch(error => {
+            setErrorMessage(error.response.data);
+            console.log("Erro:", errorMessage);
         });         
     };
 

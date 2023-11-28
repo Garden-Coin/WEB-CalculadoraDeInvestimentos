@@ -1,4 +1,4 @@
-import { SimulationResponse } from "../interfaces/interfaces";
+import { SimulationResponse } from "../interfaces/simulation";
 
 export const passData = (data: SimulationResponse) => {
     ObjetoTeste = data;

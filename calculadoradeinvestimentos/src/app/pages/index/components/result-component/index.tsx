@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import * as S from './styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card } from 'react-bootstrap';
-import { SimulationResponse } from '@/app/interfaces/interfaces';
+import { SimulationResponse } from '@/app/interfaces/simulation';
 
 const Result = (props: {result?: SimulationResponse}) => {
     const calculateRealProfitability = () => {
